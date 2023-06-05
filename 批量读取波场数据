@@ -1,0 +1,25 @@
+import tronapi
+
+# 初始化Tron节点连接
+full_node = "https://api.trongrid.io"
+solidity_node = "https://api.trongrid.io"
+event_server = "https://api.trongrid.io"
+private_key = "your_private_key"
+tron = tronapi.Tron(full_node=full_node,
+                    solidity_node=solidity_node,
+                    event_server=event_server,
+                    private_key=private_key)
+
+# 获取当前节点的最新区块高度
+latest_block = tron.trx.get_block("latest")["block_header"]["raw_data"]["number"]
+
+# 定义批量获取交易数据的起始区块高度和结束区块高度
+start_block = latest_block - 1000
+end_block = latest_block
+
+# 批量获取交易数据
+transactions = tron.trx.get_transactions_from_this(start_block=start_block, end_block=end_block)
+
+# 输出交易数据
+for tx in transactions:
+    print(tx)
