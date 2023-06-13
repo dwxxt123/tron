@@ -1,0 +1,392 @@
+net {
+  type = mainnet
+}
+
+storage {
+  db.version = 2,
+  db.engine = "LEVELDB",
+  db.sync = false,
+  db.directory = "database",
+  index.directory = "index",
+  transHistory.switch = "on",
+  
+  properties = []
+  
+  needToUpdateAsset = true
+
+  dbSettings = {
+    levelNumber = 7
+    blocksize = 256  // 增加了blocksize的大小，提高I/O吞吐能力
+    maxBytesForLevelBase = 1024  // 增加了maxBytesForLevelBase的大小，减少合并操作次数
+    maxBytesForLevelMultiplier = 10
+    level0FileNumCompactionTrigger = 8  // 增加了level0FileNumCompactionTrigger的大小，减少合并操作次数
+    targetFileSizeBase = 512  // 增加了targetFileSizeBase的大小，减少合并操作次数
+    targetFileSizeMultiplier = 1
+    writeBufferSize = 134217728  // 增加了writeBufferSize的大小，提高写性能
+    maxOpenFiles = 100000  // 增加了maxOpenFiles的大小，提高并发处理能力
+  }
+
+  backup = {
+    enable = false
+    propPath = "prop.properties" 
+    bak1path = "bak1/database" 
+    bak2path = "bak2/database"
+    frequency = 10000  
+  }
+}
+
+node.discovery = {
+  enable = true
+  persist = true
+  bind.ip = ""
+  external.ip = null
+}
+
+node.backup {
+  port = 10001
+
+  priority = 8
+}
+
+node {
+  trustNode = "127.0.0.1:50051"
+
+  walletExtensionApi = true
+
+  listen.port = 18888
+
+  connection.timeout = 2
+
+  tcpNettyWorkThreadNum = 4  // 增加了tcpNettyWorkThreadNum的数量，提高并发处理能力
+
+  udpNettyWorkThreadNum = 4  // 增加了udpNettyWorkThreadNum的数量，提高并发处理能力
+
+  connectFactor = 0.5  // 增加了connectFactor的值，提高连接速度
+
+  activeConnectFactor = 0.2  // 增加了activeConnectFactor的值，提高连接速度
+
+  maxActiveNodes = 50  // 增加了maxActiveNodes的数量，提高并发处理能力
+
+  maxActiveNodesWithSameIp = 3  // 增加了maxActiveNodesWithSameIp的数量，提高并发处理能力
+
+  maxHttpConnectNumber = 100  // 增加了maxHttpConnectNumber的数量，提高并发处理能力
+
+  minParticipationRate = 20  // 增加了minParticipationRate的值，提高网络稳定性
+
+  disconnectNumberFactor = 0.3  // 减少了disconnectNumberFactor的值，减少节点之间断开连接的情况
+
+  maxConnectNumberFactor = 0.9  // 增加了maxConnectNumberFactor的值，提高连接速度
+
+  receiveTcpMinDataLength = 4096  // 增加了receiveTcpMinDataLength的大小，提高并发处理能力
+
+  isOpenFullTcpDisconnect = true
+
+  p2p {
+    version = 11111
+  }
+
+  active = []
+  passive = []
+
+  fastForward = [
+    "100.26.245.209:18888",
+    "15.188.6.125:18888"
+  ]
+
+  http {
+    fullNodePort = 8090
+    solidityPort = 8091
+  }
+
+  rpc {
+    port = 50051
+    maxConnectionIdleInMillis = 60000
+    minEffectiveConnection = 1
+  }
+}
+
+seed.node = {
+  ip.list = [
+    "seednode1.tron.network:50051",  // 增加了种子节点，提高连接速度和可靠性
+    "seednode2.tron.network:50051",
+    "seednode3.tron.network:50051"
+    "3.225.171.164:18888",
+    "52.53.189.99:18888",
+    "18.196.99.16:18888",
+    "34.253.187.192:18888",
+    "18.133.82.227:18888",
+    "35.180.51.163:18888",
+    "54.252.224.209:18888",
+    "18.231.27.82:18888",
+    "52.15.93.92:18888",
+    "34.220.77.106:18888",
+    "15.207.144.3:18888",
+    "13.124.62.58:18888",
+    "13.229.128.108:18888",
+    "35.182.37.246:18888",
+    "34.200.228.125:18888",
+    "18.220.232.201:18888",
+    "13.57.30.186:18888",
+    "35.165.103.105:18888",
+    "18.184.238.21:18888",
+    "34.250.140.143:18888",
+    "35.176.192.130:18888",
+    "52.47.197.188:18888",
+    "52.62.210.100:18888",
+    "13.231.4.243:18888",
+    "18.231.76.29:18888",
+    "35.154.90.144:18888",
+    "13.125.210.234:18888",
+    "13.250.40.82:18888",
+    "35.183.101.48:18888"
+  ]
+}
+
+genesis.block = {
+  assets = [
+    {
+      accountName = "Zion"
+      accountType = "AssetIssue"
+      address = "TLLM21wteSPs4hKjbxgmH1L6poyMjeTbHm"
+      balance = "99000000000000000"
+    },
+    {
+      accountName = "Sun"
+      accountType = "AssetIssue"
+      address = "TXmVpin5vq5gdZsciyyjdZgKRUju4st1wM"
+      balance = "0"
+    },
+    {
+      accountName = "Blackhole"
+      accountType = "AssetIssue"
+      address = "TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy"
+      balance = "-9223372036854775808"
+    }
+  ]
+
+  witnesses = [
+   {
+      address: THKJYuUmMKKARNf7s2VT51g5uPY6KEqnat,
+      url = "http://GR1.com",
+      voteCount = 100000026
+    },
+    {
+      address: TVDmPWGYxgi5DNeW8hXrzrhY8Y6zgxPNg4,
+      url = "http://GR2.com",
+      voteCount = 100000025
+    },
+    {
+      address: TWKZN1JJPFydd5rMgMCV5aZTSiwmoksSZv,
+      url = "http://GR3.com",
+      voteCount = 100000024
+    },
+    {
+      address: TDarXEG2rAD57oa7JTK785Yb2Et32UzY32,
+      url = "http://GR4.com",
+      voteCount = 100000023
+    },
+    {
+      address: TAmFfS4Tmm8yKeoqZN8x51ASwdQBdnVizt,
+      url = "http://GR5.com",
+      voteCount = 100000022
+    },
+    {
+      address: TK6V5Pw2UWQWpySnZyCDZaAvu1y48oRgXN,
+      url = "http://GR6.com",
+      voteCount = 100000021
+    },
+    {
+      address: TGqFJPFiEqdZx52ZR4QcKHz4Zr3QXA24VL,
+      url = "http://GR7.com",
+      voteCount = 100000020
+    },
+    {
+      address: TC1ZCj9Ne3j5v3TLx5ZCDLD55MU9g3XqQW,
+      url = "http://GR8.com",
+      voteCount = 100000019
+    },
+    {
+      address: TWm3id3mrQ42guf7c4oVpYExyTYnEGy3JL,
+      url = "http://GR9.com",
+      voteCount = 100000018
+    },
+    {
+      address: TCvwc3FV3ssq2rD82rMmjhT4PVXYTsFcKV,
+      url = "http://GR10.com",
+      voteCount = 100000017
+    },
+    {
+      address: TFuC2Qge4GxA2U9abKxk1pw3YZvGM5XRir,
+      url = "http://GR11.com",
+      voteCount = 100000016
+    },
+    {
+      address: TNGoca1VHC6Y5Jd2B1VFpFEhizVk92Rz85,
+      url = "http://GR12.com",
+      voteCount = 100000015
+    },
+    {
+      address: TLCjmH6SqGK8twZ9XrBDWpBbfyvEXihhNS,
+      url = "http://GR13.com",
+      voteCount = 100000014
+    },
+    {
+      address: TEEzguTtCihbRPfjf1CvW8Euxz1kKuvtR9,
+      url = "http://GR14.com",
+      voteCount = 100000013
+    },
+    {
+      address: TZHvwiw9cehbMxrtTbmAexm9oPo4eFFvLS,
+      url = "http://GR15.com",
+      voteCount = 100000012
+    },
+    {
+      address: TGK6iAKgBmHeQyp5hn3imB71EDnFPkXiPR,
+      url = "http://GR16.com",
+      voteCount = 100000011
+    },
+    {
+      address: TLaqfGrxZ3dykAFps7M2B4gETTX1yixPgN,
+      url = "http://GR17.com",
+      voteCount = 100000010
+    },
+    {
+      address: TX3ZceVew6yLC5hWTXnjrUFtiFfUDGKGty,
+      url = "http://GR18.com",
+      voteCount = 100000009
+    },
+    {
+      address: TYednHaV9zXpnPchSywVpnseQxY9Pxw4do,
+      url = "http://GR19.com",
+      voteCount = 100000008
+    },
+    {
+      address: TCf5cqLffPccEY7hcsabiFnMfdipfyryvr,
+      url = "http://GR20.com",
+      voteCount = 100000007
+    },
+    {
+      address: TAa14iLEKPAetX49mzaxZmH6saRxcX7dT5,
+      url = "http://GR21.com",
+      voteCount = 100000006
+    },
+    {
+      address: TBYsHxDmFaRmfCF3jZNmgeJE8sDnTNKHbz,
+      url = "http://GR22.com",
+      voteCount = 100000005
+    },
+    {
+      address: TEVAq8dmSQyTYK7uP1ZnZpa6MBVR83GsV6,
+      url = "http://GR23.com",
+      voteCount = 100000004
+    },
+    {
+      address: TRKJzrZxN34YyB8aBqqPDt7g4fv6sieemz,
+      url = "http://GR24.com",
+      voteCount = 100000003
+    },
+    {
+      address: TRMP6SKeFUt5NtMLzJv8kdpYuHRnEGjGfe,
+      url = "http://GR25.com",
+      voteCount = 100000002
+    },
+    {
+      address: TDbNE1VajxjpgM5p7FyGNDASt3UVoFbiD3,
+      url = "http://GR26.com",
+      voteCount = 100000001
+    },
+    {
+      address: TLTDZBcPoJ8tZ6TTEeEqEvwYFk2wgotSfD,
+      url = "http://GR27.com",
+      voteCount = 100000000
+    }
+  ]
+
+  timestamp = "0"
+
+  parentHash = "0xe58f33f9baf9305dc6f82b9f1934ea8f0ade2defb951258d50167028c780351f"
+}
+
+localwitness = []
+
+block = {
+  needSyncCheck = true
+  maintenanceTimeInterval = 21600000
+  proposalExpireTime = 259200000
+}
+
+trx.reference.block = "solid"
+
+vm = {
+  supportConstant = false
+  minTimeRatio = 0.0
+  maxTimeRatio = 5.0
+  saveInternalTx = false
+}
+
+committee = {
+  allowCreationOfContracts = 0
+  allowAdaptiveEnergy = 0
+}
+
+event.subscribe = {
+    native = {
+      useNativeQueue = true
+      bindport = 5555
+      sendqueuelength = 1000
+    }
+
+    path = ""
+    server = ""
+    dbconfig=""
+    contractParse = true,
+    topics = [
+        {
+          triggerName = "block"
+          enable = false
+          topic = "block"
+        },
+        {
+          triggerName = "transaction"
+          enable = false
+          topic = "transaction"
+        },
+        {
+          triggerName = "contractevent"
+          enable = false
+          topic = "contractevent"
+        },
+        {
+          triggerName = "contractlog"
+          enable = false
+          topic = "contractlog"
+        },
+        {
+          triggerName = "solidity"
+          enable = true
+          topic = "solidity"
+        },
+        {
+          triggerName = "solidityevent"
+          enable = false
+          topic = "solidityevent"
+        },
+        {
+          triggerName = "soliditylog"
+          enable = false
+          topic = "soliditylog"
+        }
+    ]
+
+    filter = {
+       fromblock = "" 
+       toblock = "" 
+       contractAddress = [
+           "" 
+       ]
+
+       contractTopic = [
+           "" 
+       ]
+    }
+}
