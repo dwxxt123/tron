@@ -227,9 +227,60 @@ genesis.block = {
       address: TX3ZceVew6yLC5hWTXnjrUFtiFfUDGKGty,
       url = "http://GR18.com",
       voteCount = 100000009
+    },
+    {
+      address: TYednHaV9zXpnPchSywVpnseQxY9Pxw4do,
+      url = "http://GR19.com",
+      voteCount = 100000008
+    },
+    {
+      address: TCf5cqLffPccEY7hcsabiFnMfdipfyryvr,
+      url = "http://GR20.com",
+      voteCount = 100000007
+    },
+    {
+      address: TAa14iLEKPAetX49mzaxZmH6saRxcX7dT5,
+      url = "http://GR21.com",
+      voteCount = 100000006
+    },
+    {
+      address: TBYsHxDmFaRmfCF3jZNmgeJE8sDnTNKHbz,
+      url = "http://GR22.com",
+      voteCount = 100000005
+    },
+    {
+      address: TEVAq8dmSQyTYK7uP1ZnZpa6MBVR83GsV6,
+      url = "http://GR23.com",
+      voteCount = 100000004
+    },
+    {
+      address: TRKJzrZxN34YyB8aBqqPDt7g4fv6sieemz,
+      url = "http://GR24.com",
+      voteCount = 100000003
+    },
+    {
+      address: TRMP6SKeFUt5NtMLzJv8kdpYuHRnEGjGfe,
+      url = "http://GR25.com",
+      voteCount = 100000002
+    },
+    {
+      address: TDbNE1VajxjpgM5p7FyGNDASt3UVoFbiD3,
+      url = "http://GR26.com",
+      voteCount = 100000001
+    },
+    {
+      address: TLTDZBcPoJ8tZ6TTEeEqEvwYFk2wgotSfD,
+      url = "http://GR27.com",
+      voteCount = 100000000
     }
   ]
+
+  timestamp = "0" #2017-8-26 12:00:00
+
+  parentHash = "0xe58f33f9baf9305dc6f82b9f1934ea8f0ade2defb951258d50167028c780351f"
 }
+
+
 localwitness = []
 
 block = {
