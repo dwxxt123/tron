@@ -1,0 +1,13 @@
+import base58
+
+# 发送地址
+send_address_hex = '41f7d4f3d10a1f2b3b3d3e4f5df2b5636b31a3be88'
+send_address_bytes = bytes.fromhex(send_address_hex)
+send_address = base58.b58encode_check(send_address_bytes).decode('utf-8')
+print('发送地址:', send_address)
+
+# 接收地址
+receive_address_hex = '41011bdd8b624ff06332d8ca0e88128b4efbd55a44'
+receive_address_bytes = bytes.fromhex(receive_address_hex)
+receive_address = base58.b58encode_check(receive_address_bytes).decode('utf-8')
+print('接收地址:', receive_address)
