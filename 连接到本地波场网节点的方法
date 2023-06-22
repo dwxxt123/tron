@@ -1,0 +1,5 @@
+from tronapi import Tron
+
+# 连接到本地Tron节点
+full_node = 'http://127.0.0.1:8090'
+tron = Tron(full_node=full_node)
