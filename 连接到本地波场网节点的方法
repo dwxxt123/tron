@@ -3,3 +3,13 @@ from tronapi import Tron
 # 连接到本地Tron节点
 full_node = 'http://127.0.0.1:8090'
 tron = Tron(full_node=full_node)
+
+
+
+
+for block_height in range(start_block_height, end_block_height + 1):
+    # 获取区块数据
+    block = tron.trx.get_block(block_height)
+    transactions = block["transactions"]
+
+
