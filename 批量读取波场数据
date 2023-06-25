@@ -23,3 +23,34 @@ transactions = tron.trx.get_transactions_from_this(start_block=start_block, end_
 # 输出交易数据
 for tx in transactions:
     print(tx)
+
+
+
+
+
+
+
+import csv
+from tronapi import Tron
+import pandas as pd
+import time
+
+#
+# # 连接到本地Tron节点
+full_node = 'http://127.0.0.1:8090'
+tron = Tron(full_node=full_node)
+# 获取最新区块高度
+# tron = Tron()
+latest_block = tron.trx.get_block("latest")
+latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+print(latest_block_height)
+block_data_list = []
+i = 1
+for block_height in range(45545000, 45545100):
+# for block_height in range(52315800, 52315850):
+    block_data = tron.trx.get_block(block_height)
+    block_data_list.append(block_data)
+    # time.sleep(0.04)  # 每次请求后等待1秒
+    print(i,block_height)
+    block_df = pd.json_normalize(block_data_list)
+block_df.to_csv('/home/fxc01/Downloads/block_data06242.csv', index=False)
