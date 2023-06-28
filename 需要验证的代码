@@ -1,0 +1,90 @@
+mport csv
+from tronapi import Tron
+import pandas as pd
+
+# 连接到本地Tron节点
+tron = Tron()
+
+# 提取交易数据
+tx_data_list = []
+start_block_height = 43900856
+end_block_height = 43900859
+
+for block_height in range(start_block_height, end_block_height + 1):
+    print(block_height)
+    block_data = tron.trx.get_block_by_number(block_height)
+    if 'transactions' not in block_data:
+        continue
+    for tx in block_data['transactions']:
+        tx_data_list.append(tx)
+
+# 批量获取交易数据
+tx_data_list = tron.trx.get_transactions_from_address('YOUR_TRON_ADDRESS', limit=len(tx_data_list), offset=0)
+
+tx_df = pd.json_normalize(tx_data_list)
+tx_df.to_csv('tx_data.csv', index=False)
+
+
+
+
+
+您可以在打印交易信息之前先检查交易类型，如果是TRX转账交易，则打印发送方、接收方和交易金额。如果不是TRX转账交易，则跳过打印操作。
+
+以下是修改后的代码：
+
+from tronapi import Tron
+
+# 连接到本地Tron节点
+tron = Tron()
+
+# 获取最新区块高度
+latest_block = tron.trx.get_block("latest")
+latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+
+# 提取前1000个区块的交易数据
+start_block_height = latest_block_height - 999  # 开始区块高度
+end_block_height = latest_block_height  # 结束区块高度
+
+for block_height in range(start_block_height, end_block_height + 1):
+    # 获取区块数据
+    block = tron.trx.get_block(block_height)
+    transactions = block["transactions"]
+    
+    print(f"Block Number: {block_height}")
+    
+    # 遍历区块中的交易数据
+    for transaction in transactions:
+        if transaction['raw_data']['contract'][0]['type'] == 'TransferContract':
+            print(f"Transaction ID: {transaction['txID']}")
+            print(f"From: {transaction['raw_data']['contract'][0]['parameter']['value']['owner_address']}")
+            print(f"To: {transaction['raw_data']['contract'][0]['parameter']['value']['to_address']}")
+            print(f"Amount: {transaction['raw_data']['contract'][0]['parameter']['value']['amount']}")
+            print("-----")
+from tronapi import Tron
+
+# 连接到本地Tron节点
+tron = Tron()
+
+# 获取最新区块高度
+latest_block = tron.trx.get_block("latest")
+latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+
+# 提取前1000个区块的交易数据
+start_block_height = latest_block_height - 999  # 开始区块高度
+end_block_height = latest_block_height  # 结束区块高度
+
+for block_height in range(start_block_height, end_block_height + 1):
+    # 获取区块数据
+    block = tron.trx.get_block(block_height)
+    transactions = block["transactions"]
+    
+    print(f"Block Number: {block_height}")
+    
+    # 遍历区块中的交易数据
+    for transaction in transactions:
+        if transaction['raw_data']['contract'][0]['type'] == 'TransferContract':
+            print(f"Transaction ID: {transaction['txID']}")
+            print(f"From: {transaction['raw_data']['contract'][0]['parameter']['value']['owner_address']}")
+            print(f"To: {transaction['raw_data']['contract'][0]['parameter']['value']['to_address']}")
+            print(f"Amount: {transaction['raw_data']['contract'][0]['parameter']['value']['amount']}")
+            print("-----")
