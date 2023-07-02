@@ -1,0 +1,18 @@
+
+from tronapi import Tron
+from tronapi import HttpProvider
+
+full_node = HttpProvider('http://127.0.0.1:8090')
+solidity_node = HttpProvider('http://127.0.0.1:8091')
+event_server = HttpProvider('http://127.0.0.1:8092')
+tron = Tron(full_node=full_node,
+            solidity_node=solidity_node,
+            event_server=event_server)
+
+
+a1 = tron.address.to_hex('TT67rPNwgmpeimvHUMVzFfKsjL9GZ1wGw8')
+# result: 41BBC8C05F1B09839E72DB044A6AA57E2A5D414A10
+
+a2 = tron.address.from_hex('41BBC8C05F1B09839E72DB044A6AA57E2A5D414A10')
+# result: TT67rPNwgmpeimvHUMVzFfKsjL9GZ1wGw8
+print(a1,a2)
