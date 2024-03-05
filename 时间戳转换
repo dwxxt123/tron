@@ -1,0 +1,105 @@
+# import csv
+# from tronapi import Tron
+#
+# # 创建Tron实例
+# full_node = 'http://127.0.0.1:8090'
+# tron = Tron(full_node=full_node)
+#
+# # 获取最新区块高度
+# latest_block = tron.trx.get_current_block()["block_header"]["raw_data"]["number"]
+#
+# # 要查询的字段
+# fields = ['time', 'hash', 'mainselladdress', 'mainbuyaddress', 'mainvalue', 'type', 'transtype']
+#
+# # 创建csv文件
+# with open('transaction_data.csv', 'w', newline='') as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=fields)
+#     writer.writeheader()
+#
+#     # 遍历区块并写入csv文件
+#     for block_number in range(1, latest_block + 1):
+#         block = tron.trx.get_block(block_number)
+#
+#         # 检查区块中是否存在交易数据
+#         if 'transactions' in block:
+#             transactions = block['transactions']
+#         elif 'transaction' in block:
+#             transactions = block['transaction']
+#         else:
+#             continue
+#
+#         # 遍历区块中的交易
+#         for tx in transactions:
+#             row = {
+#                 'time': tx['raw_data']['timestamp'],
+#                 'hash': tx['txID'],
+#                 'mainselladdress': tx['raw_data']['contract'][0]['parameter']['value']['owner_address'],
+#                 'mainbuyaddress': tx['raw_data']['contract'][0]['parameter']['value'].get('to_address'),
+#                 'mainvalue': tx['raw_data']['contract'][0]['parameter']['value'].get('amount'),
+#                 'type': tx['raw_data']['contract'][0]['type'],
+#                 'transtype': tx['raw_data']['contract'][0]['type']
+#             }
+#             writer.writerow(row)
+#
+# print("数据提取完成，并已保存为transaction_data.csv文件。")
+
+
+
+
+from tronapi import Tron
+from tronapi import HttpProvider
+import base58
+
+
+full_node = 'http://127.0.0.1:8090'
+tron = Tron(full_node=full_node)
+#
+# full_node = HttpProvider('http://127.0.0.1:8090')
+# solidity_node = HttpProvider('http://127.0.0.1:8091')
+# event_server = HttpProvider('http://127.0.0.1:8092')
+# tron = Tron(full_node=full_node,
+#             solidity_node=solidity_node,
+#             event_server=event_server)
+
+#
+# # a1 = tron.address.to_hex('TT67rPNwgmpeimvHUMVzFfKsjL9GZ1wGw8')
+# # result: 41BBC8C05F1B09839E72DB044A6AA57E2A5D414A10
+# a1 = tron.address.from_hex('41e5a3e1ac60cdbd1f638e579f96732947000eb086')
+# a2 = tron.address.from_hex('41665c4717f6ed42fb67926660e5957469ce13ff15')
+# # result: TT67rPNwgmpeimvHUMVzFfKsjL9GZ1wGw8
+# print(a1,a2)
+#
+#
+# import base58
+#
+# # 发送地址
+# send_address_hex = '41f7d4f3d10a1f2b3b3d3e4f5df2b5636b31a3be88'
+# send_address_bytes = bytes.fromhex(send_address_hex)
+# send_address = base58.b58encode_check(send_address_bytes).decode('utf-8')
+# print('发送地址:', send_address)
+#
+# # 接收地址
+# receive_address_hex = '41011bdd8b624ff06332d8ca0e88128b4efbd55a44'
+# receive_address_bytes = bytes.fromhex(receive_address_hex)
+# receive_address = base58.b58encode_check(receive_address_bytes).decode('utf-8')
+# print('接收地址:', receive_address)
+
+
+
+
+import datetime
+import pytz
+
+def convert_unix_to_beijing(unix_timestamp):
+    # 创建一个datetime对象，设置其时区为UTC
+    utc_datetime = datetime.datetime.utcfromtimestamp(unix_timestamp)
+    # 将时区设置为北京时区
+    beijing_timezone = pytz.timezone('Asia/Shanghai')
+    beijing_datetime = utc_datetime.replace(tzinfo=pytz.utc).astimezone(beijing_timezone)
+
+    return beijing_datetime
+
+# 调用函数并传入UNIX时间戳
+unix_timestamp = 1670379801
+beijing_time = convert_unix_to_beijing(unix_timestamp)
+print(beijing_time)
