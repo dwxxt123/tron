@@ -1,0 +1,54 @@
+# import csv
+# from tronapi import Tron
+# import pandas as pd
+#
+# # 连接到本地Tron节点
+# full_node = 'http://127.0.0.1:8090'
+# tron = Tron(full_node=full_node)
+#
+# # 获取最新区块高度
+# latest_block = tron.trx.get_block("latest")
+# latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+#
+# # 存储交易数据的列表
+# transaction_list = []
+#
+# # 遍历指定区块高度范围内的每个区块
+# for block_height in range(45444000, 45444001): 
+#     block_data = tron.trx.get_block(block_height)
+#
+#     # 获取区块中的所有交易
+#     for transaction in block_data["transactions"]:
+#         transaction_list.append(transaction)
+#
+#     print("Height:", block_height, "Transaction Count:", len(block_data["transactions"]))
+#
+# # 将交易数据转换为DataFrame格式
+# transaction_df = pd.json_normalize(transaction_list)
+#
+# # 将交易数据保存到CSV文件
+# transaction_df.to_csv('/home/fxc01/Downloads/transaction_data06244.csv', index=False)
+
+
+import csv
+from tronapi import Tron
+import pandas as pd
+import time
+
+# 连接到本地Tron节点
+full_node = 'http://127.0.0.1:8090'
+tron = Tron(full_node=full_node)
+
+# 获取交易数据
+tx_id = "2762ae77093de59534d4bba0893e041d7c65298e738e27591d7023eac3b42793"  # 替换为您感兴趣的交易ID
+transaction = tron.trx.get_transaction(tx_id)
+
+# 解析raw_data.contract中的详细数据
+contract_data = transaction["raw_data"]["contract"]
+for index, contract in enumerate(contract_data):
+    print(f"Contract {index + 1}:")
+    print("Type:", contract["type"])
+    print("Parameter:")
+    for key, value in contract["parameter"]["value"].items():
+        print(f"  {key}: {value}")
+    print("\n")
