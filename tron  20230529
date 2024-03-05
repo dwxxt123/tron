@@ -1,0 +1,246 @@
+
+import csv
+from tronapi import Tron
+import pandas as pd
+import time
+
+#
+# # 连接到本地Tron节点
+full_node = 'http://127.0.0.1:8090'
+tron = Tron(full_node=full_node)
+# 获取最新区块高度
+# tron = Tron()
+latest_block = tron.trx.get_block("latest")
+latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+print(latest_block_height)
+block_data_list = []
+i = 1
+for block_height in range(45444000, 45545000):
+# for block_height in range(52315800, 52315850):
+    block_data = tron.trx.get_block(block_height)
+
+    block_data_list.append(block_data)
+    # time.sleep(0.04)  # 每次请求后等待1秒
+    print(i,block_height)
+    block_df = pd.json_normalize(block_data_list)
+block_df.to_csv('/home/fxc01/Downloads/block_data06244.csv', index=False)
+
+
+#
+# block_data =tron.trx.get_block_range(45545000, 45545100)
+# block_data_list.append(block_data)
+#  # time.sleep(0.04)  # 每次请求后等待1秒
+#  #    print(i,block_height)
+# block_df = pd.json_normalize(block_data_list)
+# block_df.to_csv('/home/fxc01/Downloads/block_data06243.csv', index=False)
+#
+
+
+
+
+
+#
+# # 提取交易数据
+# tx_data_list = []
+# for block_height in range(43900856, 43900859):
+#     print(block_height)
+#     block_data = tron.trx.get_block(block_height)
+#     if 'transactions' not in block_data:
+#         continue
+#     for tx in block_data['transactions']:
+#         tx_data = None
+#         while not tx_data:
+#             try:
+#                 tx_data = tron.trx.get_transaction(tx['txID'])
+#             except:
+#                 # time.sleep(0.02)
+#         tx_data_list.append(tx_data)
+#         # time.sleep(0.02)
+#
+# tx_df = pd.json_normalize(tx_data_list)
+# tx_df.to_csv('tx_data.csv', index=False)
+#
+#
+#
+# #
+# # import json
+# # import requests
+# #
+# # # Tron 本地全节点的 RPC 地址
+# # rpc_url = "http://127.0.0.1:8090"
+# #
+# # # 合约地址
+# # contract_address = "41f7d4f3d10a1f2b3b3d3e4f5df2b5636b31a3be88"
+# #
+# # # 获取合约代码
+# # def get_contract_code(contract_address):
+# #     payload = {
+# #         "jsonrpc": "2.0",
+# #         "method": "walletsolidity_getContract",
+# #         "params": {
+# #             "value": contract_address
+# #         },
+# #         "id": 1
+# #     }
+# #     response = requests.post(rpc_url, json=payload).json()
+# #     contract_code = response["result"]["bytecode"]
+# #     return contract_code
+# #
+# # # 获取合约 ABI
+# # def get_contract_abi(contract_address):
+# #     payload = {
+# #         "jsonrpc": "2.0",
+# #         "method": "walletsolidity_getContract",
+# #         "params": {
+# #             "value": contract_address
+# #         },
+# #         "id": 1
+# #     }
+# #     response = requests.post(rpc_url, json=payload).json()
+# #     contract_abi = json.loads(response["result"]["abi"])
+# #     return contract_abi
+# #
+# # # 测试代码
+# # if __name__ == "__main__":
+# #     contract_code = get_contract_code(contract_address)
+# #     contract_abi = get_contract_abi(contract_address)
+# #     print("Contract Code: ", contract_code)
+# #     print("Contract ABI: ", contract_abi)
+
+#
+#
+# import csv
+# from tronapi import Tron
+# import pandas as pd
+#
+# # 连接到本地Tron节点
+# tron = Tron()
+#
+# # 提取交易数据
+# tx_data_list = []
+# start_block_height = 43900856
+# end_block_height = 43900859
+#
+# for block_height in range(start_block_height, end_block_height + 1):
+#     print(block_height)
+#     block_data = tron.trx.get_block(block_height)
+#     if 'transactions' not in block_data:
+#         continue
+#     for tx in block_data['transactions']:
+#         tx_data_list.append(tx)
+#
+# # 批量获取交易数据
+# tx_data_list = tron.trx.get_transactions_from_address(address=None, limit=len(tx_data_list), offset=0)
+# tx_df = pd.json_normalize(tx_data_list)
+# tx_df.to_csv('tx_data.csv', index=False)
+
+#
+#
+# import csv
+# from tronapi import Tron
+# import pandas as pd
+#
+# # 连接到本地Tron节点
+# tron = Tron()
+#
+# # 提取交易数据
+# tx_data_list = []
+# start_block_height = 43800856
+# end_block_height = 43900859
+#
+# for block_height in range(start_block_height, end_block_height + 1):
+#     print(block_height)
+#     block_data = tron.trx.get_block(block_height)
+#     if 'transactions' not in block_data:
+#         continue
+#     for tx in block_data['transactions']:
+#         tx_data_list.append(tx)
+# #
+# # # 批量获取交易数据
+# # tx_data_list = tron.trx.get_transactions_from_address('TNQuWjCMbL2bjT1WKGHdDZ7FYaytq2FCCC', limit=len(tx_data_list), offset=0)
+#
+# tx_df = pd.json_normalize(tx_data_list)
+# tx_df.to_csv('//home/fxc01/Downloads/tx_data.csv', index=False)
+
+#
+# from tronapi import Tron
+#
+# # 连接到本地Tron节点
+# full_node = 'http://127.0.0.1:8090'
+# tron = Tron(full_node=full_node)
+# # tron = Tron()
+# a = 1
+# # 获取最新区块高度
+# latest_block = tron.trx.get_block("latest")
+# latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+# print(latest_block_height)
+# #
+#
+# # 提取前1000个区块的交易数据
+# start_block_height = latest_block_height - 999  # 开始区块高度
+# end_block_height = latest_block_height  # 结束区块高度
+#
+# for block_height in range(start_block_height, end_block_height + 1):
+#     # 获取区块数据
+#     block = tron.trx.get_block(block_height)
+#     transactions = block["transactions"]
+#
+#     print(f"Block Number: {block_height}")
+#
+#     # 遍历区块中的交易数据
+#     for transaction in transactions:
+#         if transaction['raw_data']['contract'][0]['type'] == 'TriggerSmartContract':
+#             print(f"Transaction ID: {transaction['txID']}")
+#             print(f"From: {transaction['raw_data']['contract'][0]['parameter']['value']['owner_address']}")
+#             # print(f"To: {transaction['raw_data']['contract'][0]['parameter']['value']['to_address']}")
+#             # print(f"Amount: {transaction['raw_data']['contract'][0]['parameter']['value']['amount']}")
+#             print("-----")
+#             print(transaction)
+#             # print(a)
+
+#
+# from multiprocessing import Process
+# from tronapi import Tron
+# full_node = 'http://127.0.0.1:8090'
+# tron = Tron(full_node=full_node)
+# def process_block(start_block_height, end_block_height):
+#     # tron = Tron(full_node='http://127.0.0.1:18888')
+#     a = 1
+#
+#     for block_height in range(start_block_height, end_block_height + 1):
+#         # 获取区块数据
+#         block = tron.trx.get_block(block_height)
+#         transactions = block["transactions"]
+#
+#         print(f"Block Number: {block_height}")
+#
+#         # 遍历区块中的交易数据
+#         for transaction in transactions:
+#             if transaction['raw_data']['contract'][0]['type'] == 'TriggerSmartContract':
+#                 a += 1
+#
+#
+# if __name__ == '__main__':
+#     # 获取最新区块高度
+#     tron = Tron()
+#     latest_block = tron.trx.get_block("latest")
+#     latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+#
+#     # 提取前1000个区块的交易数据
+#     start_block_height = latest_block_height - 999  # 开始区块高度
+#     end_block_height = latest_block_height  # 结束区块高度
+#
+#     # 创建多个进程并同时执行处理函数
+#     num_processes = 4  # 设置进程数量
+#     processes = []
+#
+#     for i in range(num_processes):
+#         start_height = start_block_height + i * ((end_block_height - start_block_height + 1) // num_processes)
+#         end_height = start_height + ((end_block_height - start_block_height + 1) // num_processes) - 1
+#         process = Process(target=process_block, args=(start_height, end_height))
+#         processes.append(process)
+#         process.start()
+#
+#     # 等待所有进程执行完毕
+#     for process in processes:
+#         process.join()
