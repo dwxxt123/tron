@@ -1,0 +1,57 @@
+# #
+# # import tronapi
+# #
+# # # 连接到本地节点
+# # full_node = tronapi.FullNode('http://localhost:9090')
+# #
+# # # 获取当前最新区块号
+# # latest_block = full_node.get_current_block()
+# # latest_block_number = latest_block['block_header']['raw_data']['number']
+# #
+# # # 相邻的10个区块
+# # for i in range(latest_block_number - 9, latest_block_number + 1):
+# #     block = full_node.get_block(i)
+# #     print("Block Number:", block['block_header']['raw_data']['number'])
+# #     print("Timestamp:", block['block_header']['raw_data']['timestamp'])
+# #     print("Transactions:", block['transactions'])
+# #     print("-----")
+#
+# from tronapi import Tron
+# tron = Tron()
+# # 获取最新区块高度
+# latest_block = tron.trx.get_block("latest")
+# latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+# print(latest_block_height)
+
+
+from tronapi import Tron
+
+# 创建Tron实例并连接到本地节点
+tron = Tron()
+# 获取最新区块高度
+latest_block = tron.trx.get_block("latest")
+latest_block_height = latest_block["block_header"]["raw_data"]["number"]
+print(latest_block_height)
+
+def get_last_10_blocks_transactions():
+    try:
+        # 获取最新的10个区块
+        blocks = tron.trx.get_latest_blocks(200000)
+
+
+        # 遍历每个区块
+        for block in blocks:
+            block_number = block["block_header"]["raw_data"]["number"]
+            print("区块号:", block_number)
+
+            # 遍历每个区块中的交易
+            transactions = block["transactions"]
+            for transaction in transactions:
+                print("交易数据:", transaction)
+
+            print("-------------------------")
+    except Exception as e:
+        print("获取最后10个区块的交易数据失败:", str(e))
+
+
+# 调用函数  get_last_10_blocks_transactions()
